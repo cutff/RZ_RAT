@@ -8,3 +8,33 @@ E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\RZ-RAT\RZ-RAT\obj
 E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\RZ-RAT\RZ-RAT\obj\Debug\RZ-RAT.csprojResolveAssemblyReference.cache
 E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\RZ-RAT\RZ-RAT\obj\Debug\RZ_RAT.FileManger.resources
 E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\RZ-RAT\RZ-RAT\obj\Debug\RZ_RAT.ProcessForm.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ-RAT.exe
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ-RAT.pdb
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\bin\Debug\RZ-RAT.exe
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\bin\Debug\RZ-RAT.pdb
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.FileManger.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.Form1.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.ProcessForm.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.Properties.Resources.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ-RAT.csproj.GenerateResource.Cache
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.Downloader.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.Builder.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ_RAT.AboutBox1.resources
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\obj\Debug\RZ-RAT.csprojResolveAssemblyReference.cache
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\bin\Debug\helper.dll
+E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\bin\Debug\helper.pdb
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ-RAT.exe
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ-RAT.pdb
+E:\Projects\RZ_RAT_fixed_v2\bin\Debug\RZ-RAT.exe
+E:\Projects\RZ_RAT_fixed_v2\bin\Debug\RZ-RAT.pdb
+E:\Projects\RZ_RAT_fixed_v2\bin\Debug\helper.dll
+E:\Projects\RZ_RAT_fixed_v2\bin\Debug\helper.pdb
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ-RAT.csprojResolveAssemblyReference.cache
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.AboutBox1.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.Builder.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.Downloader.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.FileManger.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.Form1.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.ProcessForm.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ_RAT.Properties.Resources.resources
+E:\Projects\RZ_RAT_fixed_v2\obj\Debug\RZ-RAT.csproj.GenerateResource.Cache

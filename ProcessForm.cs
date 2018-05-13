@@ -4,37 +4,47 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Windows.Forms;
+using helper;
 
 namespace RZ_RAT
 {
     public partial class ProcessForm : Form
     {
-        public string[] client = null;
-        public ProcessForm()
+        public List<ProcessManger.process> listprocess = null;
+        int index_;
+        public ProcessForm(int Index)
         {
+            index_ = Index;
             InitializeComponent();
         }
-
-        private void ProcessForm_Load(object sender, EventArgs e)
+        public void addprocesstolist()
         {
-
-        }
-        public void addprocesstolist(string[] processs)
-        {
+            listView1.Items.Clear();
             int num = 0;
-            foreach (string process in processs)
+            foreach (ProcessManger.process process in listprocess)
             {
+                try
+                {
+                    string processname = process.name;
+                    string processpid = process.pid;
 
-                string processname = process.Split(new string[] { "|" }, StringSplitOptions.None)[0];
-                string processpid = process.Split(new string[] { "|" }, StringSplitOptions.None)[1];
-                ListViewItem lvi = new ListViewItem(num.ToString());
-                lvi.SubItems.Add(processname);
-                lvi.SubItems.Add(processpid);
-                listView1.Items.Add(lvi);
-                num++;
+                    ListViewItem lvi = new ListViewItem(num.ToString());
+                    lvi.SubItems.Add(processname);
+                    lvi.SubItems.Add(processpid);
+                    this.Invoke((MethodInvoker)delegate {
+                        listView1.Items.Add(lvi);
+                    });
+                    num++;
+                }
+                catch { }
             }
+        }
+        private void ProcessForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            Form1.ServerObject.ClientsObjs[index_].PF = null;
         }
     }
 }

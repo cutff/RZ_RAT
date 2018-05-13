@@ -44,6 +44,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox1.Designer.cs">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Builder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Builder.Designer.cs">
+      <DependentUpon>Builder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Downloader.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Downloader.Designer.cs">
+      <DependentUpon>Downloader.cs</DependentUpon>
+    </Compile>
     <Compile Include="FileManger.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,6 +74,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="funcs.cs" />
     <Compile Include="ProcessForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -65,6 +84,15 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <EmbeddedResource Include="AboutBox1.resx">
+      <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Builder.resx">
+      <DependentUpon>Builder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Downloader.resx">
+      <DependentUpon>Downloader.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FileManger.resx">
       <DependentUpon>FileManger.cs</DependentUpon>
     </EmbeddedResource>
@@ -92,6 +120,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="helper\helper.csproj">
+      <Project>{9794e2bb-9cce-4739-8676-b25b54ae20ba}</Project>
+      <Name>helper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
