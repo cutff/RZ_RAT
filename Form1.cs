@@ -41,7 +41,7 @@ namespace RZ_RAT
             }
             label1.Text = "Port : " + port;
             ServerObject = new Server(port,this);
-            new Thread(new ThreadStart((MethodInvoker)delegate { ServerObject.Strat(); })).Start();
+            new Thread(()=> { ServerObject.Strat(); }).Start();
         }
         public static string ShowDialog(string text, string caption)
         {
@@ -124,9 +124,6 @@ namespace RZ_RAT
 
         private void label4_Click(object sender, EventArgs e)
         {
-            string s = @"E:\مجلد جديد (2)\Documents\Visual Studio 2013\Projects\WindowsApplication5\bin\Debug";
-            
-           MessageBox.Show(s.Replace("\\" + s.Split('\\').Last(),""));
 
         }
 

